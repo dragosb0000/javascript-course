@@ -71,3 +71,19 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
   saveToStorage();
 }
+
+export function loadCart(functionToLoadProductsGrid) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    if (xhr.status == 200) {
+      console.log(xhr.response);
+      functionToLoadProductsGrid();
+    } else {
+      console.error('Error loading products:', xhr.status, xhr.statusText);
+    }
+  })
+
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}
