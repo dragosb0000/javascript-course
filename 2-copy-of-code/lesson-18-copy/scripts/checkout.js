@@ -5,14 +5,18 @@ import { loadCart } from '../data/cart.js';
 // import '../data/cart-class.js';
 
 async function loadPage() {
+    try {
+        await loadProductsFetch();
 
-    await loadProductsFetch();
-
-    await new Promise((resolve) => {
-        loadCart(() => {
-            resolve();
+        const value = await new Promise((resolve) => {
+            loadCart(() => {
+                resolve();
+            })
         })
-    })
+
+    } catch (error) {
+        console.error('Error loading page:', error);
+    }
 
     renderOrderSummary();
     renderPaymentSummary();

@@ -111,9 +111,13 @@ export function loadProductsFetch() {
     });
     console.log('Products loaded successfully from promise');
 
-  })
+  }).catch((error) => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+
   return promise;
 }
+
 /*
 loadProductsFetch().then(() => {
   console.log('next step');
@@ -144,9 +148,14 @@ export function loadProducts(functionToLoadProductsGrid) {
     }
   })
 
+  xhr.addEventListener('error', (error) => {
+    console.error('Network error while loading products. Please check your connection.');
+  });
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
+
 
 
 //loadProducts();
