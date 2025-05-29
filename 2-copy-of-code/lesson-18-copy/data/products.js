@@ -91,6 +91,37 @@ object3.method();
 
 export let products = [];
 
+export function loadProductsFetch() {
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response) => {
+    console.log(response);
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Network response was not ok');
+    }
+  }).then((productsData) => {
+    console.log(productsData);
+
+    products = productsData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+    console.log('Products loaded successfully from promise');
+
+  })
+  return promise;
+}
+/*
+loadProductsFetch().then(() => {
+  console.log('next step');
+});
+*/
+
+
 export function loadProducts(functionToLoadProductsGrid) {
   const xhr = new XMLHttpRequest();
 
